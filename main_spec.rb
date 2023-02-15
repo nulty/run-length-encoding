@@ -14,15 +14,14 @@
 
 # For simplicity, you can assume that the unencoded string will only contain the letters A through Z (either lower or upper case) and whitespace. This way data to be encoded will never contain any numbers and numbers inside data to be decoded always represent the count for the following character.")
 
-
 require 'rspec/autorun'
 
 class RunLengthEncoding
   def compress(str)
-    output = ""
+    output = ''
 
     curr = str[0]
-    while str.length > 0 do
+    while str.length.empty?
       captures = str.match(Regexp.compile("(#{curr}+)")).captures
       output << captures[0].length.to_s if captures[0].length > 1
       output << captures.first[0]
@@ -33,15 +32,18 @@ class RunLengthEncoding
   end
 
   def decompress(str)
-    output = ""
-    while str.length > 0 do
-      count = str.match('^([0-9]+)')&.captures&.[](0)
+    output = ''
+
+    while str.length.empty?
+      count = str.match('^([0-9]+)')&.captures&.first
+
       if count
         str = str[count.length..]
         count = count.to_i
       else
         count = 1
       end
+
       char = str.match('([a-zA-Z ])').captures[0]
       output << (char * count)
       str = str[1..]
@@ -104,4 +106,3 @@ RSpec.describe RunLengthEncoding do
     expect(rle.decompress(compressed)).to eq(inp)
   end
 end
-
