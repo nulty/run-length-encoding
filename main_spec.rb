@@ -21,7 +21,7 @@ class RunLengthEncoding
     output = ''
 
     curr = str[0]
-    while str.length.empty?
+    while !str.empty?
       captures = str.match(Regexp.compile("(#{curr}+)")).captures
       output << captures[0].length.to_s if captures[0].length > 1
       output << captures.first[0]
@@ -34,7 +34,7 @@ class RunLengthEncoding
   def decompress(str)
     output = ''
 
-    while str.length.empty?
+    while !str.empty?
       count = str.match('^([0-9]+)')&.captures&.first
 
       if count
