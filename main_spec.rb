@@ -19,11 +19,35 @@ require 'rspec/autorun'
 
 class RunLengthEncoding
   def compress(str)
-    str
+    output = ""
+
+    curr = str[0]
+    while str.length > 0 do
+      captures = str.match(Regexp.compile("(#{curr}+)")).captures
+      output << captures[0].length.to_s if captures[0].length > 1
+      output << captures.first[0]
+      str = str[captures[0].length..str.length]
+      curr = str[0]
+    end
+    output
   end
 
   def decompress(str)
-    str
+    output = ""
+    while str.length > 0 do
+      count = str.match('^([0-9]+)')&.captures&.[](0)
+      if count
+        str = str[count.length..]
+        count = count.to_i
+      else
+        count = 1
+      end
+      char = str.match('([a-zA-Z ])').captures[0]
+      output << (char * count)
+      str = str[1..]
+      count = nil
+    end
+    output
   end
 end
 
@@ -80,3 +104,4 @@ RSpec.describe RunLengthEncoding do
     expect(rle.decompress(compressed)).to eq(inp)
   end
 end
+
