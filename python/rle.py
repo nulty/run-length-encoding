@@ -17,41 +17,46 @@
 
 class RunLengthEncoding:
     def compress(self, string):
+        if len(string) == 0:
+            return string
+
         output = ""
-        curr_count = 1
-        char = ""
-        for i, c in enumerate(string):
-            char = c
-            if i == len(string) - 1:
-                break
-            elif string[i + 1] == string[i]:
-                curr_count += 1
+        count = 1
+
+        for i in range(1, len(string)):
+            if string[i] == string[i - 1]:
+                count += 1
             else:
-                output += str(curr_count) if curr_count > 1 else ""
-                output += c
-                curr_count = 1
-        output += str(curr_count) if curr_count > 1 else ""
-        output += char
+                if count > 1:
+                    output += str(count)
+                output += string[i - 1]
+                count = 1
+        if count > 1:
+            output += str(count)
+        output += string[-1]
         return output
 
     def decompress(self, string):
-        i = 0
+        if len(string) == 0:
+            return string
         count = ""
         output = ""
         inp = ""
-        while i < len(string):
+        for i in range(0, len(string) - 1):
             if string[i].isdigit():
                 count += string[i]
             else:
                 if count.isdigit():
                     inp += string[i] * int(count)
+                    count = ""
                 else:
-                    inp += string[i] * 1
+                    inp += string[i]
                 output += inp
                 inp = ""
-                count = ""
-            i += 1
-        output += inp
+        if count.isdigit():
+            output += string[-1] * int(count)
+        else:
+            output += string[-1]
         return output
 
 
