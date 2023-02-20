@@ -18,3 +18,14 @@ $ bundle exec ruby main_spec.rb
 Finished in 0.00305 seconds (files took 0.05332 seconds to load)
 12 examples, 0 failures
 ```
+
+## Python
+
+```
+$ python python/rle.py
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.001s
+
+OK
+```
