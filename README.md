@@ -1,6 +1,7 @@
 # Run Length Encoding
 
-# Run
+## Ruby
+### Run
 
 ```
 bundle install
@@ -8,7 +9,7 @@ bundle exec ruby main_spec.rb
 ```
 
 
-# Output
+### Output
 
 ```
 $ bundle exec ruby main_spec.rb
